@@ -3,7 +3,7 @@ info:
   title: hola
   version: 1.0.0
 paths:
-  /upload:
+  /delete:
     post:
       requestBody:
         content:
