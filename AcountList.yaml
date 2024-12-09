@@ -1,0 +1,208 @@
+openapi: 3.0.1
+info:
+  title: Account List
+  description: BIAN Service Domain Packaged Business Capability (PCB) | DDD Bounded Context Account Listing.
+  version: 11.0.0
+servers:
+- url: ' https://virtserver.swaggerhub.com/BIAN-3/CurrentAccount/11.0.0'
+paths:
+   /CustomerProductsandServices/{PartyReference}/retrieve:
+    get:
+      tags:
+          - AccountList
+      summary: InCR Retrieve list of accounts of a customer
+      description: InCR Retrieve list of accounts of a customer
+      operationId: Retrieve
+      parameters:
+        - $ref: '#/components/parameters/PartyReference'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveAccountListResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    AccountStatus:
+      type: object
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/StatusReason'
+    StatusReason:
+      type: object
+      properties:
+        Text:
+          type: string
+          description: "\n"
+          format: string
+    AccountIdentification:
+      type: object
+      properties:
+        AccountIdentificationType:
+          type: string
+          description: "\n"
+          format: string
+        IdentifierValue:
+          $ref: '#/components/schemas/IdentifierValue'
+    IdentifierValue:
+      type: object
+      properties:
+        Value:
+          type: string
+          description: "\n"
+          format: string
+    AccountCurrency:
+      type: object
+      properties:
+        CurrencyCode:
+          type: string
+          description: "\n"
+          format: string  
+    AccountDescription:
+      type: object
+      properties:
+        Text:
+          type: string
+          description: "\n"
+          format: string
+    AccountDate:
+      type: object
+      properties:
+        AccountDateType:
+          type: string
+          description: "\n"
+          format: string
+        DateTimeContent:
+          type: string
+          description: "\n"
+          format: string
+    LinkedAccounts:
+        type: array
+        items:
+            type: object
+            properties: 
+              AccountStatus:
+                $ref: '#/components/schemas/AccountStatus'
+              AccountIdentification:
+                $ref: '#/components/schemas/AccountIdentification'
+              AccountCurrency:
+                $ref: '#/components/schemas/AccountCurrency'
+              AccountDescription:
+                $ref: '#/components/schemas/AccountDescription'
+              AccountDate:
+                $ref: '#/components/schemas/AccountDate'
+              TaxReference:
+                type: string
+                description: "\n"
+                format: string
+              EntitlementOptionDefinition:
+                type: string
+                description: "\n"
+                format: string
+              EntitlementOptionSetting:
+                type: string
+                description: "\n"
+                format: string
+              RestrictionOptionDefinition:
+                type: string
+                description: "\n"
+                format: string
+              RestrictionOptionSetting:
+                type: string
+                description: "\n"
+                format: string
+              Associations:
+                type: string
+                description: "\n"
+                format: string
+              AssociationType:
+                type: string
+                description: "\n"
+                format: string
+              AssociationReference:
+                type: string
+                description: "\n"
+                format: string
+    RetrieveAccountListResponse:
+      type: object
+      properties:
+        CustomerReference: 
+          type: string
+          description: "\n"
+          format: string
+        LinkedAccounts:
+            $ref: '#/components/schemas/LinkedAccounts'
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+          description: "\n"
+          format: string
+        status:
+          type: string
+          description: "\n"
+          format: string
+        message:
+          type: string
+          description: "\n"
+          format: string
+  parameters:
+    PartyReference:
+      name: PartyReference
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    RetrieveAccountListResponse:
+        description: fetchAccountUser
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/RetrieveAccountListResponse'
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+      description: TooManyRequests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
